@@ -19,11 +19,9 @@ RUN bundle install
 # Копіюємо всі файли проекту в контейнер
 COPY . .
 
-RUN rails db:migrate
-
 # Відкриваємо порт 3000 для доступу до Rails
 EXPOSE 3000
 
-# Команда для запуску Rails сервера
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Команда для запуску сервера Rails з виконанням міграцій
+CMD ["bash", "-c", "bin/rails db:migrate && rails server -b 0.0.0.0"]
 
