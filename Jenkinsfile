@@ -12,19 +12,11 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image for Ruby app locally
-                    sh "docker build -t ${imageName} ."
-                }
-            }
-        }
         stage('Deploy') {
             steps {
                 script {
                     // Rebuild and redeploy Docker containers
-                    sh 'docker-compose down'
+                    sh 'docker-compose down --remove-orphans'
                     sh 'docker-compose up -d --build'
                 }
             }
