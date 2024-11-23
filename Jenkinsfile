@@ -16,7 +16,8 @@ pipeline {
             steps {
                 script {
                     // Rebuild and redeploy Docker containers
-                    sh 'docker-compose down --remove-orphans'
+                    sh 'docker stop $(docker ps -aq)'
+                    sh 'docker rm $(docker ps -aq)'
                     sh 'docker-compose up -d --build'
                 }
             }
