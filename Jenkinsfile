@@ -15,9 +15,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Rebuild and redeploy Docker containers
-                    sh 'docker stop $(docker ps -aq)'
-                    sh 'docker rm $(docker ps -aq)'
+                    // Зупиняємо контейнери, якщо вони існують
+                    sh '''
+                        if [ $(docker ps -aq | wc -l) -gt 0 ]; then
+                            docker stop $(docker ps -aq)
+                            docker rm $(docker ps -aq)
+                        fi
+                    '''
+                    // Перезапускаємо Docker-контейнери
                     sh 'docker-compose up -d --build'
                 }
             }
