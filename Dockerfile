@@ -19,6 +19,8 @@ RUN bundle install
 # Копіюємо всі файли проекту в контейнер
 COPY . .
 
+RUN bin/rails db:migrate
+
 # Відкриваємо порт 3000 для доступу до Rails
 EXPOSE 3000
 
