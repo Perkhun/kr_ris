@@ -24,6 +24,6 @@ RUN rails db:migrate
 # Відкриваємо порт 3000 для доступу до Rails
 EXPOSE 3000
 
-# Команда для запуску Rails сервера
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Видаляємо PID-файл, якщо він існує, при кожному запуску
+CMD ["sh", "-c", "rm -f /app/tmp/pids/server.pid && rails server -b 0.0.0.0"]
 
